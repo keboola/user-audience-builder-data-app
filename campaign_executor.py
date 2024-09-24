@@ -1,4 +1,4 @@
-#from kbcstorage.client import Client
+#import streamlit as st
 import streamlit as st
 import pandas as pd
 import csv
@@ -37,6 +37,9 @@ def main():
     
     file_path = "/data/in/tables/twilio_sms_campaign_approval_request.csv"
     data = pd.read_csv(file_path)
+    
+    # Convert phone_number column to string to avoid type conflict
+    data['phone_number'] = data['phone_number'].astype(str)
     
     # Display the data in an editable table using st.data_editor
     edited_data = st.data_editor(
