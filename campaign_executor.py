@@ -38,21 +38,21 @@ def main():
     file_path = "/data/in/tables/twilio_sms_campaign_approval_request.csv"
     data = pd.read_csv(file_path)
     
-    # Display the data in an editable table using st.dataframe
-    edited_data = st.dataframe(data, use_container_width=True, key='twilio_sms_campaign_approval_request')
+    # Display the data in an editable table using st.data_editor
+    edited_data = st.data_editor(data, use_container_width=True, key='twilio_sms_campaign_approval_request')
 
     # Reformat phone_number in the table as text field
     edited_data['phone_number'] = edited_data['phone_number'].astype(str)
 
     if st.button("Upload to Keboola"):
-        if os.path.exists('updated_data.csv'):
+        if os.path.exists('updated_data.csv.gz'):
             os.remove('updated_data.csv.gz')
         else:
             print("The file does not exist")
         
-        edited_data.to_csv('updated_data.csv.gz', index=False,compression='gzip')
+        edited_data.to_csv('updated_data.csv.gz', index=False, compression='gzip')
         
-        client_upload.tables.load(table_id = 'out.c-campaign-executer.twilio_sms_campaign_approval_request' , file_path='updated_data.csv.gz', is_incremental=False)
+        client_upload.tables.load(table_id='out.c-campaign-executer.twilio_sms_campaign_approval_request', file_path='updated_data.csv.gz', is_incremental=False)
 
     
     # Display HTML footer
