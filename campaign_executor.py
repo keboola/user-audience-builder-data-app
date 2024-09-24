@@ -38,11 +38,11 @@ def main():
     file_path = "/data/in/tables/twilio_sms_campaign_approval_request.csv"
     data = pd.read_csv(file_path)
     
-    # Display the data in an editable table using st.data_editor
-    edited_data = st.data_editor(data, num_rows=0, width=1400, height=500, use_container_width=True, key='twilio_sms_campaign_approval_request')
+    # Display the data in an editable table using st.dataframe
+    edited_data = st.dataframe(data, use_container_width=True, key='twilio_sms_campaign_approval_request')
 
-    # Reformat phone_number in the table as phone number
-    edited_data['phone_number'] = edited_data['phone_number'].apply(lambda x: f"{x[:3]}-{x[3:6]}-{x[6:]}")
+    # Reformat phone_number in the table as text field
+    edited_data['phone_number'] = edited_data['phone_number'].astype(str)
 
     if st.button("Upload to Keboola"):
         if os.path.exists('updated_data.csv'):
