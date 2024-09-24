@@ -41,8 +41,8 @@ def main():
     # Display the data in an editable table using st.data_editor
     edited_data = st.data_editor(data, use_container_width=True, key='twilio_sms_campaign_approval_request')
 
-    # Reformat phone_number in the table as text field
-    edited_data['phone_number'] = edited_data['phone_number'].astype(str)
+    # Reformat phone_number in the table to remove commas
+    edited_data['phone_number'] = edited_data['phone_number'].astype(str).str.replace(',', '')
 
     if st.button("Upload to Keboola"):
         if os.path.exists('updated_data.csv.gz'):
